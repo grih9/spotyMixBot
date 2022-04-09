@@ -1,33 +1,26 @@
-import uuid
-
 import spotipy
-import spotipy.util as util
 from spotipy.oauth2 import SpotifyOAuth
 
-from constants import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI
-
-scope = "user-library-read streaming app-remote-control user-library-modify playlist-modify-public user-top-read " \
-        "user-read-playback-position user-read-recently-played user-read-currently-playing user-read-playback-state " \
-        "user-modify-playback-state"
+from constants import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI, SPOTIPY_SCOPE
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
-                                               redirect_uri=SPOTIPY_REDIRECT_URI, scope=scope))
+                                               redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
 
-results = sp.recommendation_genre_seeds()
-results = sp.recommendation_genre_seeds()
 
-results = sp.recommendations(seed_genres=["classical"])
-for idx, item in enumerate(results['tracks']):
-    track = item['name']
-    print(idx, item['artists'][0]['name'], " – ", track)
-
+# results = sp.recommendations(seed_genres=["classical"])
+# tracks = []
+# for idx, item in enumerate(results['tracks']):
+#     track = item['name']
+#     tracks.append(item["id"])
+#     print(idx, item['artists'][0]['name'], " – ", track)
+#
 # # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
 # #                                                redirect_uri=SPOTIPY_REDIRECT_URI))
 # user = sp.current_user()
 # playlist_name = f"SpotyMix Bot - {uuid.uuid1()}"
-# playlist = sp.user_playlist_create(user, playlist_name)
-# tracks = sp.recommendations()
-# sp.playlist_add_items(playlist, tracks)
+# playlist = sp.user_playlist_create(user["id"], playlist_name)
+#
+# res = sp.playlist_add_items(playlist['id'], tracks)
 #
 # results = sp.current_user_saved_tracks()
 #
