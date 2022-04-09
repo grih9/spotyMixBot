@@ -1,7 +1,7 @@
 SPOTIPY_CLIENT_ID = "14ae88777f034e4ea0a8ac78cfc95632"
 SPOTIPY_CLIENT_SECRET = "d4583dbda5c246a7a3c4d31087e13e6b"
 SPOTIPY_REDIRECT_URI = "http://localhost"
-SPOTIPY_SCOPE = "user-library-read streaming app-remote-control user-library-modify playlist-modify-public" \
+SPOTIPY_SCOPE = "user-library-read streaming app-remote-control user-library-modify playlist-modify-public " \
                 "user-top-read user-read-playback-position user-read-recently-played user-read-currently-playing " \
                 "user-read-playback-state user-modify-playback-state"
 
