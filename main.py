@@ -7,13 +7,15 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
                                                redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
 
 
-# results = sp.recommendations(seed_genres=["classical"])
-# tracks = []
-# for idx, item in enumerate(results['tracks']):
-#     track = item['name']
-#     tracks.append(item["id"])
-#     print(idx, item['artists'][0]['name'], " – ", track)
-#
+results = sp.recommendations(seed_genres=["classical"])
+tracks = []
+for idx, item in enumerate(results['tracks']):
+    track = item['name']
+    tracks.append(item["id"])
+    print(idx, item['artists'][0]['name'], " – ", track)
+
+result = sp.audio_features(tracks)
+print(result)
 # # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
 # #                                                redirect_uri=SPOTIPY_REDIRECT_URI))
 # user = sp.current_user()
