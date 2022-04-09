@@ -63,31 +63,3 @@ print(result)
 #     track = item['name']
 #     print(idx, item['artists'][0]['name'], " – ", track)
 
-playlists = []
-
-
-def process_mpd(path):
-    filenames = os.listdir(path)
-    for filename in sorted(filenames):
-        print(filename)
-        if filename.startswith("mpd.slice.") and filename.endswith(".json"):
-            fullpath = os.sep.join((path, filename))
-            f = open(fullpath)
-            js = f.read()
-            f.close()
-            mpd_slice = json.loads(js)
-            for playlist in mpd_slice["playlists"]:
-                process_playlist(playlist)
-
-
-def process_playlist(playlist):
-    tracks = set()
-
-    for track in playlist["tracks"]:
-        tracks.add(track["track_uri"])
-
-    playlists.append(tracks)
-
-
-process_mpd("data")
-print(playlists)
