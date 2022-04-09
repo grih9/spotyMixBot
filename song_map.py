@@ -52,3 +52,19 @@ def getSongMap():
                                         df_spec['genres_list'][i], df_spec['track_name'][i], df_spec['artist_name'][i])
 
     return _dict
+
+def getPlaylists(sp):
+    df_spec = pd.read_csv("./playlist_data.csv", usecols=['uid'])
+    df_spec.head()
+
+    _dict = getSongMap()
+
+    for uid in df_spec['uid']:
+
+        if _dict.get(uid) is None:
+
+            result = sp.audio_features(tracks)
+            print(result)
+
+
+

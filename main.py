@@ -19,6 +19,9 @@ for idx, item in enumerate(results['tracks']):
 
 result = sp.audio_features(tracks)
 print(result)
+
+
+
 # # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
 # #                                                redirect_uri=SPOTIPY_REDIRECT_URI))
 # user = sp.current_user()
