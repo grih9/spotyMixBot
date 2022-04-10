@@ -64,7 +64,7 @@ def get_playlists(sp):
     tracks = df_spec['uid']
     max_num = 50
     total_num = len(tracks)
-    k = 276231
+    k = 546727
     with open("song_new.csv", "a", newline='', encoding="utf-8") as file:
         csv_writer = csv.writer(file)
         while k < total_num:
