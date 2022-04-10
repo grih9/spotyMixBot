@@ -9,7 +9,7 @@ SPOTIPY_SCOPE = "user-library-read streaming app-remote-control user-library-mod
                 "user-top-read user-read-playback-position user-read-recently-played user-read-currently-playing " \
                 "user-read-playback-state user-modify-playback-state"
 
-genres = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'ambient', 6: 'anime', 7: 'black-metal',
+GENRES = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'ambient', 6: 'anime', 7: 'black-metal',
        8: 'bluegrass', 9: 'blues', 10: 'bossanova', 11: 'brazil', 12: 'breakbeat', 13: 'british', 14: 'cantopop',
        15: 'chicago-house', 16: 'children', 17: 'chill', 18: 'classical', 19: 'club', 20: 'comedy', 21: 'country',
        22: 'dance', 23: 'dancehall', 24: 'death-metal', 25: 'deep-house', 26: 'detroit-techno', 27: 'disco',
@@ -28,3 +28,10 @@ genres = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'amb
        109: 'singer-songwriter', 110: 'ska', 111: 'sleep', 112: 'songwriter', 113: 'soul', 114: 'soundtracks',
        115: 'spanish', 116: 'study', 117: 'summer', 118: 'swedish', 119: 'synth-pop', 120: 'tango',
        121: 'techno', 122: 'trance', 123: 'trip-hop', 124: 'turkish', 125: 'work-out', 126: 'world-music'}
+
+G = ['pop', 'rock', 'punk', 'metal', 'k-pop', 'classical', 'folk', 'singer-songwriter', 'soul', 'emo',
+     'grunge', 'disco', 'funk', 'electro', 'latin', 'reggae', 'country', 'edm', 'house', 'trance',
+     'reggaeton', 'jazz', 'ska', 'industrial', 'rockabilly', 'metalcore', 'bluegrass', 'mandopop',
+     'blues', 'dubstep', 'gospel', 'breakbeat', 'disney', 'salsa', 'pagode', 'dub', 'dancehall',
+     'comedy', 'sleep', 'mpb', 'samba', 'forro', 'ambient', 'afrobeat', 'j-pop', 'j-rock', 'sertanejo',
+     'hardcore', 'hardstyle', 'techno', 'cantopop', 'anime', 'opera']
