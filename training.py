@@ -18,6 +18,8 @@ from pr_constants import GNI, G
 def load_dataset():
     # labels = np.array(GNI)
     # labels = labels.reshape(labels.shape[0], 1)
+    tmp_dict = dict()
+
     with open("train_data.csv", "r", encoding="utf-8") as file:
         csv_reader = csv.reader(file)
         data = []
@@ -27,6 +29,15 @@ def load_dataset():
             if not flag:
                 flag = True
                 continue
+
+            if tmp_dict.get(GNI[row[9]]) is None:
+                tmp_dict[GNI[row[9]]] = 1
+            else:
+                tmp_dict[GNI[row[9]]] += 1
+
+            if tmp_dict[GNI[row[9]]] > 662:
+                continue
+
             labels.append(GNI[row[9]])
             tmp = list(map(float, row[:8]))
             tmp[2] /= -60
