@@ -74,7 +74,6 @@ def get_playlists(sp):
 
             for i in range(len(track_slice)):
                 current_track = track_slice[k + i]
-                print(k + i)
                 if _dict.get(current_track) is None:
                     del features_result[i]["key"]
                     del features_result[i]["analysis_url"]
