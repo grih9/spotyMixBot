@@ -1,5 +1,9 @@
-SPOTIPY_CLIENT_ID = "14ae88777f034e4ea0a8ac78cfc95632"
-SPOTIPY_CLIENT_SECRET = "d4583dbda5c246a7a3c4d31087e13e6b"
+# SPOTIPY_CLIENT_ID = "14ae88777f034e4ea0a8ac78cfc95632"
+# SPOTIPY_CLIENT_SECRET = "d4583dbda5c246a7a3c4d31087e13e6b"
+SPOTIPY_CLIENT_ID = "3c9e22d0c36d486abf26b2a7febe5511"
+SPOTIPY_CLIENT_SECRET = "033885f073f34e6f87a3577cd8f477ba"
+client_id = "5356afb958c84e71a2c37c43e2a2cbf2"
+client_secret = "83e531491e9c458ba658ac30c4c56bc0"
 SPOTIPY_REDIRECT_URI = "http://localhost"
 SPOTIPY_SCOPE = "user-library-read streaming app-remote-control user-library-modify playlist-modify-public " \
                 "user-top-read user-read-playback-position user-read-recently-played user-read-currently-playing " \

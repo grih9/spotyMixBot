@@ -1,3 +1,5 @@
+import csv
+
 import numpy as np
 import pandas as pd
 
@@ -35,7 +37,7 @@ class Track:
         self.id = id
 
 
-def getSongMap():
+def get_song_map():
     df_spec = pd.read_csv("./song_data.csv", usecols=['id', 'danceability', 'energy', 'loudness', 'speechiness',
                                                       'acousticness', 'instrumentalness', 'liveness', 'valence',
                                                       'tempo', 'genres_list', 'track_name', 'artist_name'])
@@ -53,18 +55,69 @@ def getSongMap():
 
     return _dict
 
-def getPlaylists(sp):
+def get_playlists(sp):
     df_spec = pd.read_csv("./playlist_data.csv", usecols=['uid'])
     df_spec.head()
 
-    _dict = getSongMap()
+    _dict = get_song_map()
 
-    for uid in df_spec['uid']:
+    tracks = df_spec['uid']
+    max_num = 50
+    total_num = len(tracks)
+    k = 0
+    with open("song_new.csv", "a", newline='', encoding="utf-8") as file:
+        csv_writer = csv.writer(file)
+        while k < total_num:
+            track_slice = tracks[k:k + max_num]
+            features_result = sp.audio_features(track_slice)
+            info_result = sp.tracks(track_slice)
 
-        if _dict.get(uid) is None:
+            for i in range(len(track_slice)):
+                current_track = track_slice[k + i]
+                print(k + i)
+                if _dict.get(current_track) is None:
+                    del features_result[i]["key"]
+                    del features_result[i]["analysis_url"]
+                    del features_result[i]["time_signature"]
+                    del features_result[i]["track_href"]
+                    del features_result[i]["type"]
+                    del features_result[i]["uri"]
+                    del features_result[i]["duration_ms"]
+                    del features_result[i]["mode"]
+                    result = features_result[i]
+                    print(k + i)
+                    if info_result['tracks'][i] is None:
+                        print("None")
+                    result["artist_name"] = info_result['tracks'][i]["artists"][0]["name"] if info_result['tracks'][i] is not None else 0
+                    result["track_name"] = info_result['tracks'][i]["name"] if info_result['tracks'][i] is not None else 0
+                    #result["genre_list"] = info_result['tracks'][i]["artists"][0]["genres"]
+                    _dict[current_track] = Track(**result)
+                    val = _dict[current_track]
+                    csv_writer.writerow(
+                        [val.artist_name, val.track_name, val.genre_list, val.tempo, val.valence, val.liveness,
+                         val.instrumentalness, val.acousticness, val.speechiness, val.loudness, val.energy,
+                         val.danceability, val.id])
+            k += max_num
 
-            result = sp.audio_features(tracks)
-            print(result)
+    # with open("song_new.csv", "w", newline='', encoding="utf-8") as file:
+    #     csv_writer = csv.writer(file)
+    #     for val in _dict.values():
+    #         csv_writer.writerow([val.artist_name, val.track_name, val.genre_list, val.tempo, val.valence, val.liveness,
+    #                              val.instrumentalness, val.acousticness, val.speechiness, val.loudness, val.energy,
+    #                              val.danceability, val.id])
+    #
+    #     if _dict.get(uid) is None:
+    #
+    #     features['uid']
+    # #_dict[uid] = result
+    # features = result
+    #
+    # for uid in df_spec['uid']:
+    #
+    #     if _dict.get(uid) is None:
+    #         _dict[uid] = None
+    #         result = sp.audio_features(tracks)
+    #         print(result)
 
 
 

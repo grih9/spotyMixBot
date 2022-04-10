@@ -5,20 +5,20 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 
 from constants import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIRECT_URI, SPOTIPY_SCOPE
+from song_map import get_playlists
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
                                                redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
-
-
-results = sp.recommendations(seed_genres=["classical"])
-tracks = []
-for idx, item in enumerate(results['tracks']):
-    track = item['name']
-    tracks.append(item["id"])
-    print(idx, item['artists'][0]['name'], " – ", track)
-
-result = sp.audio_features(tracks)
-print(result)
+get_playlists(sp)
+# results = sp.recommendations(seed_genres=["classical"])
+# tracks = []
+# for idx, item in enumerate(results['tracks']):
+#     track = item['name']
+#     tracks.append(item["id"])
+#     print(idx, item['artists'][0]['name'], " – ", track)
+#
+# result = sp.audio_features(tracks)
+# print(result)
 
 
 
