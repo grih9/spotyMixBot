@@ -28,7 +28,7 @@ def load_dataset():
                 flag = True
                 continue
             labels.append(GNI[row[9]])
-            tmp = list(map(float, row[:7]))
+            tmp = list(map(float, row[:8]))
             tmp[2] /= -60
             data.append(tmp)
 
@@ -59,7 +59,7 @@ print(test_y.shape)
 # test_x = test_x.reshape(test_x.shape[0], test_x.shape[1], 1)
 
 model = Sequential()
-model.add(Flatten(input_shape=[7]))
+model.add(Flatten(input_shape=[8]))
 model.add(Dropout(0.6))
 model.add(Dense(1024, activation="relu"))
 model.add(Dropout(0.5))
@@ -75,3 +75,4 @@ pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
 model.save("Model.h5")
+
