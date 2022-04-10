@@ -10,8 +10,9 @@ import pandas as pd
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
-from constants import GNI, G
 import numpy as np
+
+from pr_constants import GNI, G
 
 
 def load_dataset():
@@ -33,7 +34,7 @@ def load_dataset():
 
     print(labels)
 
-    train_x, test_x, train_y, test_y = train_test_split(np.array(data), np.array(labels), test_size=0.25)
+    train_x, test_x, train_y, test_y = train_test_split(np.array(data), np.array(labels), test_size=0.1)
 
     # Convert the labels into one-hot vectors.
     print(set(train_y).difference(set(test_y)))
@@ -70,7 +71,7 @@ model.add(Dense(len(G), activation="softmax"))
 model.compile(loss="categorical_crossentropy", optimizer=tf.optimizers.Adam(lr=0.0001), metrics=['accuracy'])
 print(model.summary())
 #plot_model(model, to_file="Saved_Model/Model_Architecture.jpg")
-pd.DataFrame(model.fit(train_x, train_y, epochs=1000, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
+pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
 model.save("Model.h5")

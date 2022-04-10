@@ -3,7 +3,7 @@ import json
 import os
 import uuid
 
-from constants import GENRES, G
+from pr_constants import GENRES, G
 
 
 def process_data_files(path):

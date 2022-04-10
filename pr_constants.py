@@ -30,9 +30,14 @@ GENRES = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'amb
        121: 'techno', 122: 'trance', 123: 'trip-hop', 124: 'turkish', 125: 'work-out', 126: 'world-music'}
 
 G = ['pop', 'rock', 'punk', 'metal', 'k-pop', 'classical', 'folk', 'singer-songwriter', 'soul', 'emo',
-     'grunge', 'disco', 'funk', 'electro', 'latin', 'reggae', 'country', 'edm', 'house', 'trance',
-     'reggaeton', 'jazz', 'ska', 'industrial', 'rockabilly', 'metalcore', 'mandopop', 'blues', 'dubstep', 'gospel',
-     'dub', 'dancehall', 'comedy', 'sleep', 'ambient']
+     'grunge', 'disco', 'funk', 'electro', 'latin', 'reggae', 'country', 'edm', 'house', 'reggaeton', 'jazz',
+     'metalcore', 'blues', 'dubstep', 'gospel', 'dancehall']
 
-GIN = {0: 'pop', 1: 'rock', 2: 'punk', 3: 'metal', 4: 'k-pop', 5: 'classical', 6: 'folk', 7: 'singer-songwriter', 8: 'soul', 9: 'emo', 10: 'grunge', 11: 'disco', 12: 'funk', 13: 'electro', 14: 'latin', 15: 'reggae', 16: 'country', 17: 'edm', 18: 'house', 19: 'trance', 20: 'reggaeton', 21: 'jazz', 22: 'ska', 23: 'industrial', 24: 'rockabilly', 25: 'metalcore', 26: 'mandopop', 27: 'blues', 28: 'dubstep', 29: 'gospel', 30: 'dub', 31: 'dancehall', 32: 'comedy', 33: 'sleep', 34: 'ambient'}
-GNI = {'pop': 0, 'rock': 1, 'punk': 2, 'metal': 3, 'k-pop': 4, 'classical': 5, 'folk': 6, 'singer-songwriter': 7, 'soul': 8, 'emo': 9, 'grunge': 10, 'disco': 11, 'funk': 12, 'electro': 13, 'latin': 14, 'reggae': 15, 'country': 16, 'edm': 17, 'house': 18, 'trance': 19, 'reggaeton': 20, 'jazz': 21, 'ska': 22, 'industrial': 23, 'rockabilly': 24, 'metalcore': 25, 'mandopop': 26, 'blues': 27, 'dubstep': 28, 'gospel': 29, 'dub': 30, 'dancehall': 31, 'comedy': 32, 'sleep': 33, 'ambient': 34}
+GIN = {0: 'pop', 1: 'rock', 2: 'punk', 3: 'metal', 4: 'k-pop', 5: 'classical', 6: 'folk', 7: 'singer-songwriter',
+       8: 'soul', 9: 'emo', 10: 'grunge', 11: 'disco', 12: 'funk', 13: 'electro', 14: 'latin', 15: 'reggae',
+       16: 'country', 17: 'edm', 18: 'house', 19: 'reggaeton', 20: 'jazz', 21: 'metalcore', 22: 'blues',
+       23: 'dubstep', 24: 'gospel', 25: 'dancehall'}
+GNI = {'pop': 0, 'rock': 1, 'punk': 2, 'metal': 3, 'k-pop': 4, 'classical': 5, 'folk': 6, 'singer-songwriter': 7,
+       'soul': 8, 'emo': 9, 'grunge': 10, 'disco': 11, 'funk': 12, 'electro': 13, 'latin': 14, 'reggae': 15,
+       'country': 16, 'edm': 17, 'house': 18, 'reggaeton': 19, 'jazz': 20, 'metalcore': 21, 'blues': 22,
+       'dubstep': 23, 'gospel': 24, 'dancehall': 25}
