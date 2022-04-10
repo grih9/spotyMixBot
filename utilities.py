@@ -82,7 +82,7 @@ def create_train_data():
         with open("song_new.csv", "r", encoding="utf-8") as read_file:
             csv_reader = csv.reader(read_file)
             for row in csv_reader:
-                genres = row[13]
+                genres = row[12]
                 if genres == "[]":
                     continue
                 genres = genres[1: -1].split()
