@@ -1,3 +1,4 @@
+import tensorflow as tf
 
 def encoder(x):
     layer_1 = tf.nn.sigmoid(tf.add(tf.matmul(x, weights['encoder_h1']), biases['encoder_b1']))
