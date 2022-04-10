@@ -30,25 +30,25 @@ def load_dataset():
                 flag = True
                 continue
 
-            if tmp_dict.get(GNI[row[9]]) is None:
-                tmp_dict[GNI[row[9]]] = 1
-            else:
-                tmp_dict[GNI[row[9]]] += 1
+            # if tmp_dict.get(GNI[row[9]]) is None:
+            #     tmp_dict[GNI[row[9]]] = 1
+            # else:
+            #     tmp_dict[GNI[row[9]]] += 1
 
-            if tmp_dict[GNI[row[9]]] > 662:
-                continue
+            # if GNI[row[9]] == 0 or GNI[row[9]] == 1:
+            #     continue
 
             labels.append(GNI[row[9]])
             tmp = list(map(float, row[:8]))
             tmp[2] /= -60
             data.append(tmp)
 
-    print(labels)
+    # print(labels)
 
     train_x, test_x, train_y, test_y = train_test_split(np.array(data), np.array(labels), test_size=0.1)
 
     # Convert the labels into one-hot vectors.
-    print(set(train_y).difference(set(test_y)))
+    # print(set(train_y).difference(set(test_y)))
     train_y = np_utils.to_categorical(train_y)
     test_y = np_utils.to_categorical(test_y)
     # n_classes = len(genre)
@@ -82,7 +82,7 @@ model.add(Dense(len(G), activation="softmax"))
 model.compile(loss="categorical_crossentropy", optimizer=tf.optimizers.Adam(lr=0.0001), metrics=['accuracy'])
 print(model.summary())
 #plot_model(model, to_file="Saved_Model/Model_Architecture.jpg")
-pd.DataFrame(model.fit(train_x, train_y, epochs=20, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
+pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
 model.save("Model.h5")
