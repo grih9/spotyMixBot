@@ -29,9 +29,9 @@ GENRES = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'amb
        115: 'spanish', 116: 'study', 117: 'summer', 118: 'swedish', 119: 'synth-pop', 120: 'tango',
        121: 'techno', 122: 'trance', 123: 'trip-hop', 124: 'turkish', 125: 'work-out', 126: 'world-music'}
 
-G = ['pop', 'rock', 'punk', 'metal', 'k-pop', 'classical', 'folk', 'singer-songwriter', 'soul', 'emo',
-     'grunge', 'disco', 'funk', 'electro', 'latin', 'reggae', 'country', 'edm', 'house', 'reggaeton', 'jazz',
-     'metalcore', 'blues', 'dubstep', 'gospel', 'dancehall', 'indie', 'rap', 'hip_hop']
+G = ['metal', 'electro', 'singer-songwriter', 'folk', 'soul', 'emo', 'grunge', 'disco', 'funk', 'latin', 'reggae',
+     'country', 'edm', 'house', 'reggaeton', 'jazz', 'metalcore', 'blues', 'dubstep', 'gospel', 'dancehall',
+     'rap', 'hip_hop', 'rock', 'indie', 'pop', 'punk', 'k-pop', 'classical']
 
 GIN = {0: 'pop', 1: 'rock', 2: 'punk', 3: 'metal', 4: 'k-pop', 5: 'classical', 6: 'folk', 7: 'singer-songwriter',
        8: 'soul', 9: 'emo', 10: 'grunge', 11: 'disco', 12: 'funk', 13: 'electro', 14: 'latin', 15: 'reggae',

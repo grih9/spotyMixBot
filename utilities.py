@@ -76,11 +76,18 @@ def create_train_data():
                 genres = row[15].split()
                 added = []
                 for genre in genres:
+                    break_var = False
                     for elem in G:
                         if elem in genre:
                             if elem not in added:
                                 added.append(elem)
                                 csv_writer.writerow([row[3], row[4], row[6], row[8], row[9], row[10], row[11], row[12], row[13], elem])
+                                break_var = True
+                                break
+                        if break_var:
+                            break_var = False
+                            break
+
         with open("song_new.csv", "r", encoding="utf-8") as read_file:
             csv_reader = csv.reader(read_file)
             for row in csv_reader:
@@ -90,11 +97,19 @@ def create_train_data():
                     continue
                 genres = genres[1: -1].split()
                 for genre in genres:
+                    break_var = False
                     for elem in G:
                         if elem in genre:
                             if elem not in added:
                                 added.append(elem)
                                 csv_writer.writerow([row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], elem])
+                                break_var = True
+                                break
+                    if break_var:
+                        break_var = False
+                        break
+
+
 if __name__ == "__main__":
     #write_data_to_file()
     #read_genres()
