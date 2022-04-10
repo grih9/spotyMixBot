@@ -30,18 +30,18 @@ def load_dataset():
                 flag = True
                 continue
 
-            if tmp_dict.get(GNI[row[9]]) is None:
-                tmp_dict[GNI[row[9]]] = 1
-            else:
-                tmp_dict[GNI[row[9]]] += 1
-
-            if tmp_dict[GNI[row[9]]] >= 10000:
-                print(GNI[row[9]], tmp_dict[GNI[row[9]]])
-                continue
+            # if tmp_dict.get(GNI[row[9]]) is None:
+            #     tmp_dict[GNI[row[9]]] = 1
+            # else:
+            #     tmp_dict[GNI[row[9]]] += 1
+            #
+            # if tmp_dict[GNI[row[9]]] >= 10000:
+            #     print(GNI[row[9]], tmp_dict[GNI[row[9]]])
+            #     continue
 
             labels.append(GNI[row[9]])
             tmp = list(map(float, row[:8]))
-            tmp[2] /= -60
+            tmp[2] /= -60.0
             data.append(tmp)
 
     # print(labels)
