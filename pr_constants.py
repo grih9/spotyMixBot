@@ -1,7 +1,7 @@
-# SPOTIPY_CLIENT_ID = "14ae88777f034e4ea0a8ac78cfc95632"
-# SPOTIPY_CLIENT_SECRET = "d4583dbda5c246a7a3c4d31087e13e6b"
-SPOTIPY_CLIENT_ID = "3c9e22d0c36d486abf26b2a7febe5511"
-SPOTIPY_CLIENT_SECRET = "033885f073f34e6f87a3577cd8f477ba"
+SPOTIPY_CLIENT_ID = "14ae88777f034e4ea0a8ac78cfc95632"
+SPOTIPY_CLIENT_SECRET = "d4583dbda5c246a7a3c4d31087e13e6b"
+# SPOTIPY_CLIENT_ID = "3c9e22d0c36d486abf26b2a7febe5511"
+# SPOTIPY_CLIENT_SECRET = "033885f073f34e6f87a3577cd8f477ba"
 client_id = "5356afb958c84e71a2c37c43e2a2cbf2"
 client_secret = "83e531491e9c458ba658ac30c4c56bc0"
 SPOTIPY_REDIRECT_URI = "http://localhost"
@@ -36,8 +36,8 @@ G = ['pop', 'rock', 'punk', 'metal', 'k-pop', 'classical', 'folk', 'singer-songw
 GIN = {0: 'pop', 1: 'rock', 2: 'punk', 3: 'metal', 4: 'k-pop', 5: 'classical', 6: 'folk', 7: 'singer-songwriter',
        8: 'soul', 9: 'emo', 10: 'grunge', 11: 'disco', 12: 'funk', 13: 'electro', 14: 'latin', 15: 'reggae',
        16: 'country', 17: 'edm', 18: 'house', 19: 'reggaeton', 20: 'jazz', 21: 'metalcore', 22: 'blues',
-       23: 'dubstep', 24: 'gospel', 25: 'dancehall'}
+       23: 'dubstep', 24: 'gospel', 25: 'dancehall', 26: 'indie', 27: 'rap', 28: 'hip-hop'}
 GNI = {'pop': 0, 'rock': 1, 'punk': 2, 'metal': 3, 'k-pop': 4, 'classical': 5, 'folk': 6, 'singer-songwriter': 7,
        'soul': 8, 'emo': 9, 'grunge': 10, 'disco': 11, 'funk': 12, 'electro': 13, 'latin': 14, 'reggae': 15,
        'country': 16, 'edm': 17, 'house': 18, 'reggaeton': 19, 'jazz': 20, 'metalcore': 21, 'blues': 22,
-       'dubstep': 23, 'gospel': 24, 'dancehall': 25}
+       'dubstep': 23, 'gospel': 24, 'dancehall': 25, 'indie': 26, "rap": 27, "hip hop": 28}

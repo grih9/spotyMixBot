@@ -64,8 +64,8 @@ def get_playlists(sp):
     tracks = df_spec['uid']
     max_num = 50
     total_num = len(tracks)
-    k = 2000
-    with open("song_new.csv", "w", newline='', encoding="utf-8") as file:
+    k = 276231
+    with open("song_new.csv", "a", newline='', encoding="utf-8") as file:
         csv_writer = csv.writer(file)
         while k < total_num:
             track_slice = tracks[k:k + max_num]
@@ -75,7 +75,14 @@ def get_playlists(sp):
             genre_result = sp.artists(artists)
 
             for i in range(len(track_slice)):
-                if genre_result["artists"][i] == [] or info_result['tracks'][i] is None:
+                try:
+                    if genre_result["artists"][i] == []:
+                        print(k + i, "ERROR1")
+                        continue
+                except Exception:
+                    print(k + i, "ERROR1")
+                if info_result['tracks'][i] is None:
+                    print(k + i, "ERROR2")
                     continue
                 current_track = track_slice[k + i]
                 if _dict.get(current_track) is None:
