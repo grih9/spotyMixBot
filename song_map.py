@@ -64,7 +64,7 @@ def get_playlists(sp):
     tracks = df_spec['uid']
     max_num = 50
     total_num = len(tracks)
-    k = 0
+    k = 2000
     with open("song_new.csv", "w", newline='', encoding="utf-8") as file:
         csv_writer = csv.writer(file)
         while k < total_num:
@@ -75,6 +75,8 @@ def get_playlists(sp):
             genre_result = sp.artists(artists)
 
             for i in range(len(track_slice)):
+                if genre_result["artists"][i] == [] or info_result['tracks'][i] is None:
+                    continue
                 current_track = track_slice[k + i]
                 if _dict.get(current_track) is None:
                     del features_result[i]["key"]
@@ -89,9 +91,9 @@ def get_playlists(sp):
                     print(k + i)
                     if info_result['tracks'][i] is None:
                         print("None")
-                    result["artist_name"] = info_result['tracks'][i]["artists"][0]["name"] if info_result['tracks'][i] is not None else 0
-                    result["track_name"] = info_result['tracks'][i]["name"] if info_result['tracks'][i] is not None else 0
-                    result["genre_list"] = genre_result[i]["genres"]
+                    result["artist_name"] = info_result['tracks'][i]["artists"][0]["name"]
+                    result["track_name"] = info_result['tracks'][i]["name"]
+                    result["genre_list"] = genre_result["artists"][i]["genres"]
                     _dict[current_track] = Track(**result)
                     val = _dict[current_track]
                     csv_writer.writerow(

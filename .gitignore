@@ -2,3 +2,5 @@
 *.json
 __pycache__/constants.cpython-38.pyc
 __pycache__/
+.cache
+__pycache__/song_map.cpython-38.pyc
