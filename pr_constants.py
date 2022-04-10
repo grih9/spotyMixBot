@@ -29,15 +29,10 @@ GENRES = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'amb
        115: 'spanish', 116: 'study', 117: 'summer', 118: 'swedish', 119: 'synth-pop', 120: 'tango',
        121: 'techno', 122: 'trance', 123: 'trip-hop', 124: 'turkish', 125: 'work-out', 126: 'world-music'}
 
-G = ['metal', 'electro', 'singer-songwriter', 'folk', 'soul', 'emo', 'grunge', 'disco', 'funk', 'latin', 'reggae',
-     'country', 'edm', 'house', 'reggaeton', 'jazz', 'metalcore', 'blues', 'dubstep', 'gospel', 'dancehall',
-     'rap', 'hip_hop', 'rock', 'indie', 'pop', 'punk', 'k-pop', 'classical']
+G = ['electro', 'soul', 'latin', 'country', 'jazz', 'blues',
+     'rap', 'hip_hop', 'rock', 'indie', 'classical', 'pop']
 
-GIN = {0: 'pop', 1: 'rock', 2: 'punk', 3: 'metal', 4: 'k-pop', 5: 'classical', 6: 'folk', 7: 'singer-songwriter',
-       8: 'soul', 9: 'emo', 10: 'grunge', 11: 'disco', 12: 'funk', 13: 'electro', 14: 'latin', 15: 'reggae',
-       16: 'country', 17: 'edm', 18: 'house', 19: 'reggaeton', 20: 'jazz', 21: 'metalcore', 22: 'blues',
-       23: 'dubstep', 24: 'gospel', 25: 'dancehall', 26: 'indie', 27: 'rap', 28: 'hip_hop'}
-GNI = {'pop': 0, 'rock': 1, 'punk': 2, 'metal': 3, 'k-pop': 4, 'classical': 5, 'folk': 6, 'singer-songwriter': 7,
-       'soul': 8, 'emo': 9, 'grunge': 10, 'disco': 11, 'funk': 12, 'electro': 13, 'latin': 14, 'reggae': 15,
-       'country': 16, 'edm': 17, 'house': 18, 'reggaeton': 19, 'jazz': 20, 'metalcore': 21, 'blues': 22,
-       'dubstep': 23, 'gospel': 24, 'dancehall': 25, 'indie': 26, "rap": 27, "hip_hop": 28}
+GIN = {0: 'pop', 1: 'rock', 2: 'classical', 3: 'soul', 4: 'electro', 5: 'latin',
+       6: 'country', 7: 'jazz', 8: 'blues', 9: 'indie', 10: 'rap', 11: 'hip_hop'}
+GNI = {'pop': 0, 'rock': 1, 'classical': 2, 'soul': 3, 'electro': 4, 'latin': 5,
+       'country': 6, 'jazz': 7, 'blues': 8, 'indie': 9, 'rap': 10, 'hip_hop': 11}
