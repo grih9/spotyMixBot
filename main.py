@@ -16,7 +16,10 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
 model = load_model("Model.h5")
 # tracks = sp.current_user_top_tracks()
 # track = tracks['tracks'][0]['name']
-a = np.array([[0.511, 0.47200000000000003, -9.277000000000001/-60.0, 0.091, 0.534, 0.614, 0.11, 0.0399]])
+
+
+# a = np.array([[0.511, 0.47200000000000003, -9.277000000000001/-60.0, 0.091, 0.534, 0.614, 0.11, 0.0399]])
+a = np.array([[0.705,0.796,-6.845/-60.0,0.267,0.0708,0.0,0.388,0.864]])
 print(a)
 prediction = model.predict(a)
 print(prediction)
