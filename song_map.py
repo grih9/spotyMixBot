@@ -65,12 +65,14 @@ def get_playlists(sp):
     max_num = 50
     total_num = len(tracks)
     k = 0
-    with open("song_new.csv", "a", newline='', encoding="utf-8") as file:
+    with open("song_new.csv", "w", newline='', encoding="utf-8") as file:
         csv_writer = csv.writer(file)
         while k < total_num:
             track_slice = tracks[k:k + max_num]
             features_result = sp.audio_features(track_slice)
             info_result = sp.tracks(track_slice)
+            artists = [elem["artists"][0]["id"] for elem in info_result['tracks'] if elem is not None]
+            genre_result = sp.artists(artists)
 
             for i in range(len(track_slice)):
                 current_track = track_slice[k + i]
@@ -89,13 +91,13 @@ def get_playlists(sp):
                         print("None")
                     result["artist_name"] = info_result['tracks'][i]["artists"][0]["name"] if info_result['tracks'][i] is not None else 0
                     result["track_name"] = info_result['tracks'][i]["name"] if info_result['tracks'][i] is not None else 0
-                    #result["genre_list"] = info_result['tracks'][i]["artists"][0]["genres"]
+                    result["genre_list"] = genre_result[i]["genres"]
                     _dict[current_track] = Track(**result)
                     val = _dict[current_track]
                     csv_writer.writerow(
-                        [val.artist_name, val.track_name, val.genre_list, val.tempo, val.valence, val.liveness,
-                         val.instrumentalness, val.acousticness, val.speechiness, val.loudness, val.energy,
-                         val.danceability, val.id])
+                        [val.artist_name, val.track_name, val.id, val.danceability, val.energy, val.loudness,
+                         val.speechiness, val.acousticness, val.instrumentalness, val.liveness, val.valence,
+                         val.tempo, val.genre_list])
             k += max_num
 
     # with open("song_new.csv", "w", newline='', encoding="utf-8") as file:
