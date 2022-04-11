@@ -63,9 +63,6 @@ print(train_x.shape)
 print(test_x.shape)
 print(train_y.shape)
 print(test_y.shape)
-# datasetSize = 0.75, this returns 3/4th of the dataset.
-
-# Expand the dimensions of the image to have a channel dimension. (nx128x128) ==> (nx128x128x1)
 
 # train_x = train_x.reshape(train_x.shape[0], train_x.shape[1], 1)
 # test_x = test_x.reshape(test_x.shape[0], test_x.shape[1], 1)
@@ -82,7 +79,6 @@ model.add(Dense(32, activation="relu"))
 model.add(Dense(len(G), activation="softmax"))
 model.compile(loss="categorical_crossentropy", optimizer=tf.optimizers.Adam(lr=0.0001), metrics=['accuracy'])
 print(model.summary())
-#plot_model(model, to_file="Saved_Model/Model_Architecture.jpg")
 pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
