@@ -4,7 +4,6 @@ import tensorflow as tf
 from keras.models import Sequential
 from keras import initializers
 from keras import optimizers
-#from keras.utils import plot_model
 from keras.layers import *
 import pandas as pd
 from keras.utils import np_utils
@@ -48,7 +47,6 @@ def load_dataset():
 
     train_x, test_x, train_y, test_y = train_test_split(np.array(data), np.array(labels), test_size=0.1)
 
-    # Convert the labels into one-hot vectors.
     # print(set(train_y).difference(set(test_y)))
     train_y = np_utils.to_categorical(train_y)
     test_y = np_utils.to_categorical(test_y)
