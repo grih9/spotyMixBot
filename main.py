@@ -14,14 +14,15 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
                                                redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
 # get_playlists(sp)
 
-model = load_model("Model.h5")
+model = load_model("Model1.h5")
 # tracks = sp.current_user_top_tracks()
 # track = tracks['tracks'][0]['name']
 
 
 with open("spotify.csv", "r", encoding="utf-8") as read_file:
     csv_reader = csv.reader(read_file)
-    next(csv_reader, None)
+    for i in range(50000):
+        next(csv_reader, None)
     for row in csv_reader:
         artist = row[1]
         track = row[12]
