@@ -109,10 +109,11 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
 #     print(idx, name)
 #
 
-r_type = "short"
-result_short = sp.current_user_top_tracks(limit=40, time_range="short_term")
-result_mid = sp.current_user_top_tracks(limit=40, time_range="medium_term")
-result_long = sp.current_user_top_tracks(limit=40, time_range="long_term")
+r_type = "medium" # medium, long, short
+top_tracks = 30 # from 0 to 50
+result_short = sp.current_user_top_tracks(limit=top_tracks, time_range="short_term")
+result_mid = sp.current_user_top_tracks(limit=top_tracks, time_range="medium_term")
+result_long = sp.current_user_top_tracks(limit=top_tracks, time_range="long_term")
 if r_type == "long":
     res = result_long
 elif r_type == "medium":
@@ -159,20 +160,30 @@ train_features = pd.read_csv("train_data.csv")
 train_features = train_features.drop(columns="genre")
 playlist_features = pd.read_csv("playlist_create.scv")
 playlist_features = playlist_features.drop(columns="name")
-train_features = pd.concat([train_features, playlist_features], axis=0)
+
+spotify_features = pd.read_csv("spotify.csv")
+spotify_features = spotify_features.loc[spotify_features['popularity'] > 60]
+sp_feat = spotify_features[["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
+                            "liveness", "valence", "tempo", "id"]].reset_index(drop=True)
+
+train_features = pd.concat([train_features, playlist_features, sp_feat], axis=0)
 pop = train_features[["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
                       "liveness", "valence", "tempo"]].reset_index(drop=True)
 names = train_features[["id"]].reset_index(drop=True)
 scaler = MinMaxScaler()
 pop_scaled = pd.DataFrame(scaler.fit_transform(pop), columns=pop.columns)
 pop_scaled.head()
+
 train_features = pd.concat([pop_scaled, names], axis=1)
-songDF = pd.read_csv("./song_recomendation/data/allsong_data.csv")
+songDF = pd.read_csv("spotify.csv")
+# songDF.columns = ["artist", "song", "id", 'data1', 'data2', 'data3', 'data4', 'data5', 'data6', 'data7', 'data8',
+#                   'data9', 'data10']
+songDF = spotify_features
 train_features.drop_duplicates("id", inplace=True)
 data_recomend = recommend_from_playlist(songDF=songDF, complete_feature_set=train_features, playlistDF_test=playlist_features)[:40]
 print(data_recomend)
 ids_recommend = data_recomend['id'].values
-create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"SpotyMixBot - {datetime.now().date()} - {r_type}")
+create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"SpotyMixBot - {datetime.now().date()} - {r_type} - pop - {top_tracks}")
 
 
 
