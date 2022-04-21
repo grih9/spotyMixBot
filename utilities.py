@@ -40,9 +40,9 @@ def write_data_to_file():
                 csv_writer.writerow([playlist_id, track])
             playlist_id += 1
 
-def create_playlist_with_recommended_songs(sp, tracks=None, playlist_name=None):
+def create_playlist_with_recommended_songs(sp, tracks=None, genre_cid="pop", playlist_name=None):
     if tracks is None:
-        results = sp.recommendations(seed_genres=["classical"])
+        results = sp.recommendations(limit=40, seed_genres=[genre_cid])
         tracks = []
         for idx, item in enumerate(results['tracks']):
             tracks.append(item["id"])

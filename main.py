@@ -22,61 +22,6 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
                                                redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
-# get_playlists(sp)
-
-####
-#model = load_model("Model1.h5")
-
-
-# tracks = sp.current_user_top_tracks()
-# track = tracks['tracks'][0]['name']
-
-### main
-# with open("spotify.csv", "r", encoding="utf-8") as read_file:
-#     csv_reader = csv.reader(read_file)
-#     for i in range(50000):
-#         next(csv_reader, None)
-#     for row in csv_reader:
-#         artist = row[1]
-#         track = row[12]
-#         a = np.array([[float(row[2]), float(row[4]), float(row[10])/-60.0, float(row[15]),
-#                        float(row[0]), float(row[7]), float(row[9]), float(row[17])]])
-#         prediction = model.predict(a)
-#         print(artist, track)
-#         data = {}
-#         for i, elem in enumerate(prediction[0]):
-#             data[GIN[i]] = elem
-#         data = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
-#         b = 0
-#         for key, value in data.items():
-#             print(key, value)
-#             b += 1
-#             if b == 4:
-#                 break
-
-
-
-# a = np.array([[0.511, 0.47200000000000003, -9.277000000000001/-60.0, 0.091, 0.534, 0.614, 0.11, 0.0399]])
-# # a = np.array([[0.705,0.796,-6.845/-60.0,0.267,0.0708,0.0,0.388,0.864]])
-# print(a)
-# prediction = model.predict(a)
-# for i, elem in enumerate(prediction[0]):
-#     print(GIN[i], elem)
-# print(prediction)
-# danceability,energy,loudness,speechiness,acousticness,instrumentalness,liveness,valence,
-# 0.534,['Lorde'],0.511,258969,0.47200000000000003,0,0TEekvXTomKt3hdXDZxxeW,0.614,4,0.11,-9.277000000000001,1,Ribs,76,2013-01-01,0.091,127.978,0.0399,2013
-# acousticness,artists,danceability,duration_ms,energy,explicit,id,instrumentalness,key,liveness,loudness,mode,name,popularity,release_date,speechiness,tempo,valence,year
-# resu lts = sp.recommendations(seed_genres=["classical"])
-# tracks = []
-# for idx, item in enumerate(results['tracks']):
-#     track = item['name']
-#     tracks.append(item["id"])
-#     print(idx, item['artists'][0]['name'], " – ", track)
-#
-# result = sp.audio_features(tracks)
-# print(result)
-
-
 types = {1: "short",
          2: "medium",
          3: "long"}
@@ -133,6 +78,7 @@ with open("playlist_create.csv", 'w', encoding="utf-8", newline='') as write_fil
              val.instrumentalness, val.liveness, val.valence,
              val.tempo, track, val.id])
 
+genre_cid = None
 if int(use_genre) == 1:
     print("Определяю жанры...")
     print_data = input("Вывести данные определения жанров?\n1. Да, 0. Нет: ")
@@ -140,7 +86,7 @@ if int(use_genre) == 1:
         print_data = input("Вывести данные определения жанров?\n1. Да, 0. Нет: ")
     print_data = int(print_data)
     predictions = []
-    model = load_model("Model7.h5")
+    model = load_model("Model5.h5")
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
         next(csv_reader, None)
@@ -162,21 +108,22 @@ if int(use_genre) == 1:
                     b += 1
                     if b == 4:
                         break
-            if abs(data[0] - data[1]) < 0.035:
-                predictions.append(data[0])
-                predictions.append(data[1])
+            if abs(list(data.values())[0] - list(data.values())[1]) < 0.035:
+                predictions.append(list(data.keys())[0])
+                predictions.append(list(data.keys())[1])
             else:
-                predictions.append(data[0])
+                predictions.append(list(data.keys())[0])
 
-values = set(predictions)
-dict_pred = {}
-for val in values:
-    dict_pred[val] = predictions.count(val)
+    values = set(predictions)
+    dict_pred = {}
+    for val in values:
+        dict_pred[val] = predictions.count(val)
 
-dict_pred = {k: v for k, v in sorted(dict_pred.items(), key=lambda item: item[1], reverse=True)}
-print(dict_pred)
+    dict_pred = {k: v for k, v in sorted(dict_pred.items(), key=lambda item: item[1], reverse=True)}
+    print(dict_pred)
 
-print(f"Похоже вам нравиться {dict_pred.keys()}, целых {dict_pred.values()}")
+    print(f"Похоже вам нравится {list(dict_pred.keys())[0]}, целых {list(dict_pred.values())[0]} песен такого жанра!")
+    genre_cid = list(dict_pred.keys())[0]
 
 train_features = pd.read_csv("train_data.csv")
 train_features = train_features.drop(columns="genre")
@@ -207,5 +154,9 @@ data_recommend = recommend_from_playlist(songDF=songDF, complete_feature_set=tra
 ids_recommend = data_recommend['id'].values
 playlist_name = str(input("Введите имя для плейлистов:"))
 create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"{playlist_name} [SpotyMixBot {r_type[0]}{top_tracks}]")
-print("Плейлист создан! Наслаждайтесь!")
+print("Плейлист на основе прослушиваний создан! Наслаждайтесь!")
+if use_genre == 1:
+    create_playlist_with_recommended_songs(sp=sp, genre_cid=genre_cid,
+                                           playlist_name=f"{playlist_name} [Spotify {genre_cid}]")
+print("Плейлист с рекомендациями по жанру создан! Наслаждайтесь!")
 
