@@ -21,15 +21,18 @@ def load_dataset():
 
     train_data = pd.read_csv("train_data.csv")
     train_features = train_data[["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
-                                "liveness", "valence", "tempo", "id"]].reset_index(drop=True)
+                                "liveness", "valence", "tempo"]].reset_index(drop=True)
     train_genres = train_data[["genre"]].reset_index(drop=True)
-    names = train_features[["id"]].reset_index(drop=True)
+
     scaler = MinMaxScaler()
     pop_scaled = pd.DataFrame(scaler.fit_transform(train_features), columns=train_features.columns)
     pop_scaled.head()
-    train_features = pop_scaled
+    train_features = pop_scaled.values
 
-    labels = train_genres
+    labels = train_genres.values
+    for i in range(len(labels)):
+        b = labels[i][0]
+        labels[i][0] = GNI[b]
 
     # print(labels)
 
