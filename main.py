@@ -132,7 +132,7 @@ with open("playlist_create.csv", 'w', encoding="utf-8", newline='') as write_fil
 
 if int(use_genre) == 1:
     print("Определяю жанры...")
-    model = load_model("Model1.h5")
+    model = load_model("Model3.h5")
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
         next(csv_reader, None)

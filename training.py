@@ -71,5 +71,5 @@ print(model.summary())
 pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
-model.save("Model3.h5")
+model.save("Model4.h5")
 
