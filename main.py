@@ -92,7 +92,10 @@ while int(top_tracks) not in range(1, 51):
     top_tracks = input("Введите число треков от 1 до 50: ")
 top_tracks = int(top_tracks)
 
-use_genre = input("Определять жанр?\n1. Да, 2. Нет: ")
+use_genre = input("Создать плейлист по жанрам?\n1. Да, 0. Нет: ")
+while use_genre != "1" and use_genre != "0":
+    use_genre = input("Создать плейлист по жанрам?\n1. Да, 0. Нет: ")
+use_genre = int(use_genre)
 
 result_short = sp.current_user_top_tracks(limit=top_tracks, time_range="short_term")
 result_mid = sp.current_user_top_tracks(limit=top_tracks, time_range="medium_term")
@@ -132,7 +135,12 @@ with open("playlist_create.csv", 'w', encoding="utf-8", newline='') as write_fil
 
 if int(use_genre) == 1:
     print("Определяю жанры...")
+    print_data = input("Вывести данные определения жанров?\n1. Да, 0. Нет: ")
+    while print_data != "1" and print_data != "0":
+        print_data = input("Вывести данные определения жанров?\n1. Да, 0. Нет: ")
+    print_data = int(print_data)
     model = load_model("Model5.h5")
+    predictions = []
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
         next(csv_reader, None)
@@ -141,17 +149,34 @@ if int(use_genre) == 1:
             a = np.array([[float(row[0]), float(row[1]), float(row[2]) / -60.0, float(row[3]),
                            float(row[4]), float(row[5]), float(row[6]), float(row[7]), float(row[8]) / 240]])
             prediction = model.predict(a)
-            print(track)
+            if print_data == 1:
+                print(track)
             data = {}
             for i, elem in enumerate(prediction[0]):
                 data[GIN[i]] = elem
             data = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
             b = 0
-            for key, value in data.items():
-                print(key, value)
-                b += 1
-                if b == 4:
-                    break
+            if print_data == 1:
+                for key, value in data.items():
+                    print(key, value)
+                    b += 1
+                    if b == 4:
+                        break
+            if abs(data[0] - data[1]) < 0.035:
+                predictions.append(data[0])
+                predictions.append(data[1])
+            else:
+                predictions.append(data[0])
+
+values = set(predictions)
+dict_pred = {}
+for val in values:
+    dict_pred[val] = predictions.count(val)
+
+dict_pred = {k: v for k, v in sorted(dict_pred.items(), key=lambda item: item[1], reverse=True)}
+print(dict_pred)
+
+print(f"Похоже вам нравиться {dict_pred.keys()}, целых {dict_pred.values()}")
 
 train_features = pd.read_csv("train_data.csv")
 train_features = train_features.drop(columns="genre")
@@ -180,7 +205,7 @@ train_features.drop_duplicates("id", inplace=True)
 data_recommend = recommend_from_playlist(songDF=songDF, complete_feature_set=train_features, playlistDF_test=playlist_features)[:40]
 #print(data_recomend)
 ids_recommend = data_recommend['id'].values
-playlist_name = str(input("Введите имя для плейлиста:"))
+playlist_name = str(input("Введите имя для плейлистов:"))
 create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"{playlist_name} [SpotyMixBot {r_type[0]}{top_tracks}]")
 print("Плейлист создан! Наслаждайтесь!")
 
