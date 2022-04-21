@@ -139,8 +139,8 @@ if int(use_genre) == 1:
     while print_data != "1" and print_data != "0":
         print_data = input("Вывести данные определения жанров?\n1. Да, 0. Нет: ")
     print_data = int(print_data)
-    model = load_model("Model5.h5")
     predictions = []
+    model = load_model("Model7.h5")
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
         next(csv_reader, None)
