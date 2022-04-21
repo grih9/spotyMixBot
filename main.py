@@ -135,8 +135,7 @@ if int(use_genre) == 1:
     model = load_model("Model1.h5")
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
-        for i in range(50000):
-            next(csv_reader, None)
+        next(csv_reader, None)
         for row in csv_reader:
             track = row[9]
             a = np.array([[float(row[0]), float(row[1]), float(row[2]), float(row[3]),
