@@ -108,7 +108,7 @@ if int(use_genre) == 1:
                     b += 1
                     if b == 4:
                         break
-            if abs(list(data.values())[0] - list(data.values())[1]) < 0.035:
+            if abs(list(data.values())[0] - list(data.values())[1]) < 0.045:
                 predictions.append(list(data.keys())[0])
                 predictions.append(list(data.keys())[1])
             else:
