@@ -10,6 +10,7 @@ from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
 import numpy as np
+from sklearn.preprocessing import MinMaxScaler
 
 from pr_constants import GNI, G
 
@@ -17,35 +18,22 @@ from pr_constants import GNI, G
 def load_dataset():
     # labels = np.array(GNI)
     # labels = labels.reshape(labels.shape[0], 1)
-    tmp_dict = dict()
 
-    with open("train_data.csv", "r", encoding="utf-8") as file:
-        csv_reader = csv.reader(file)
-        data = []
-        labels = []
-        flag = False
-        for row in csv_reader:
-            if not flag:
-                flag = True
-                continue
+    train_data = pd.read_csv("train_data.csv")
+    train_features = train_data[["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
+                                "liveness", "valence", "tempo", "id"]].reset_index(drop=True)
+    train_genres = train_data[["genre"]].reset_index(drop=True)
+    names = train_features[["id"]].reset_index(drop=True)
+    scaler = MinMaxScaler()
+    pop_scaled = pd.DataFrame(scaler.fit_transform(train_features), columns=train_features.columns)
+    pop_scaled.head()
+    train_features = pop_scaled
 
-            # if tmp_dict.get(GNI[row[9]]) is None:
-            #     tmp_dict[GNI[row[9]]] = 1
-            # else:
-            #     tmp_dict[GNI[row[9]]] += 1
-            #
-            # if tmp_dict[GNI[row[9]]] >= 10000:
-            #     print(GNI[row[9]], tmp_dict[GNI[row[9]]])
-            #     continue
-
-            labels.append(GNI[row[9]])
-            tmp = list(map(float, row[:8]))
-            tmp[2] /= -60.0
-            data.append(tmp)
+    labels = train_genres
 
     # print(labels)
 
-    train_x, test_x, train_y, test_y = train_test_split(np.array(data), np.array(labels), test_size=0.1)
+    train_x, test_x, train_y, test_y = train_test_split(train_features, labels, test_size=0.1)
 
     # print(set(train_y).difference(set(test_y)))
     train_y = np_utils.to_categorical(train_y)
@@ -66,7 +54,7 @@ print(test_y.shape)
 # test_x = test_x.reshape(test_x.shape[0], test_x.shape[1], 1)
 
 model = Sequential()
-model.add(Flatten(input_shape=[8]))
+model.add(Flatten(input_shape=[9]))
 model.add(Dropout(0.6))
 model.add(Dense(1024, activation="relu"))
 model.add(Dropout(0.5))
@@ -80,5 +68,5 @@ print(model.summary())
 pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
-model.save("Model2.h5")
+model.save("Model3.h5")
 
