@@ -77,38 +77,6 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
 # print(result)
 
 
-
-# # sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
-# #                                                redirect_uri=SPOTIPY_REDIRECT_URI))
-# user = sp.current_user()
-# playlist_name = f"SpotyMix Bot - {uuid.uuid1()}"
-# playlist = sp.user_playlist_create(user["id"], playlist_name)
-#
-# res = sp.playlist_add_items(playlist['id'], tracks)
-#
-# results = sp.current_user_saved_tracks()
-#
-#
-#
-# for idx, item in enumerate(results['items']):
-#     track = item['track']
-#     print(idx, track['artists'][0]['name'], " – ", track['name'])
-#
-#
-#
-# result = sp.current_user_top_artists(limit=100, time_range="short_term")
-# for idx, item in enumerate(result['items']):
-#     name = item["name"]
-#     print(idx, name)
-# result = sp.current_user_top_artists(limit=100, time_range="medium_term")
-# for idx, item in enumerate(result['items']):
-#     name = item["name"]
-#     print(idx, name)
-# result = sp.current_user_top_artists(limit=100, time_range="long_term")
-# for idx, item in enumerate(result['items']):
-#     name = item["name"]
-#     print(idx, name)
-#
 types = {1: "short",
          2: "medium",
          3: "long"}
@@ -137,7 +105,7 @@ else:
     res = result_short
 
 print(f"\nВаш топ-{top_tracks} за выбранный промежуток времени:")
-with open("playlist_create.scv", 'w', encoding="utf-8", newline='') as write_file:
+with open("playlist_create.csv", 'w', encoding="utf-8", newline='') as write_file:
     csv_writer = csv.writer(write_file)
     csv_writer.writerow(["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
                          "liveness", "valence", "tempo", "name", "id"])
@@ -162,9 +130,33 @@ with open("playlist_create.scv", 'w', encoding="utf-8", newline='') as write_fil
              val.instrumentalness, val.liveness, val.valence,
              val.tempo, track, val.id])
 
+if int(use_genre) == 1:
+    print("Определяю жанры...")
+    model = load_model("Model1.h5")
+    with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
+        csv_reader = csv.reader(read_file)
+        for i in range(50000):
+            next(csv_reader, None)
+        for row in csv_reader:
+            track = row[9]
+            a = np.array([[float(row[0]), float(row[1]), float(row[2]), float(row[3]),
+                           float(row[4]), float(row[5]), float(row[6]), float(row[7]), float(row[8])]])
+            prediction = model.predict(a)
+            print(track)
+            data = {}
+            for i, elem in enumerate(prediction[0]):
+                data[GIN[i]] = elem
+            data = {k: v for k, v in sorted(data.items(), key=lambda item: item[1], reverse=True)}
+            b = 0
+            for key, value in data.items():
+                print(key, value)
+                b += 1
+                if b == 4:
+                    break
+
 train_features = pd.read_csv("train_data.csv")
 train_features = train_features.drop(columns="genre")
-playlist_features = pd.read_csv("playlist_create.scv")
+playlist_features = pd.read_csv("playlist_create.csv")
 playlist_features = playlist_features.drop(columns="name")
 
 spotify_features = pd.read_csv("spotify.csv")
