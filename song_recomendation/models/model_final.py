@@ -24,12 +24,12 @@ def generate_playlist_feature(complete_feature_set, playlist_df):
     
     # Find song features in the playlist
     complete_feature_set_playlist = complete_feature_set[complete_feature_set['id'].isin(playlist_df['id'].values)]
-    print(complete_feature_set_playlist)
+    #print(complete_feature_set_playlist)
     # Find all non-playlist song features
     complete_feature_set_nonplaylist = complete_feature_set[~complete_feature_set['id'].isin(playlist_df['id'].values)]
     complete_feature_set_playlist_final = complete_feature_set_playlist.drop(columns="id")
     #complete_feature_set_playlist_final = playlist_df.drop(columns="id").drop(columns='name')
-    print(complete_feature_set_playlist_final.sum(axis=0))
+    #print(complete_feature_set_playlist_final.sum(axis=0))
     return complete_feature_set_playlist_final.sum(axis=0), complete_feature_set_nonplaylist
 
 def generate_playlist_recos(df, features, nonplaylist_features):
@@ -45,9 +45,9 @@ def generate_playlist_recos(df, features, nonplaylist_features):
     non_playlist_df_top_40: Top 40 recommendations for that playlist
     '''
 
-    print(len(df))
+    #print(len(df))
     non_playlist_df = df[df['id'].isin(nonplaylist_features['id'].values)]
-    print(len(non_playlist_df))
+    #print(len(non_playlist_df))
     # Find cosine similarity between the playlist and the complete song set
     b = cosine_similarity(nonplaylist_features.drop('id', axis=1).values, features.values.reshape(1, -1))[:,0]
     non_playlist_df['sim'] = pd.Series(b)

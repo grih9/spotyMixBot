@@ -18,7 +18,8 @@ from pr_constants import SPOTIPY_CLIENT_ID, SPOTIPY_CLIENT_SECRET, SPOTIPY_REDIR
 from song_map import get_playlists, Track
 from song_recomendation.models.model_final import recommend_from_playlist
 from utilities import create_playlist_with_recommended_songs
-
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, client_secret=SPOTIPY_CLIENT_SECRET,
                                                redirect_uri=SPOTIPY_REDIRECT_URI, scope=SPOTIPY_SCOPE))
 # get_playlists(sp)
@@ -108,9 +109,23 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT_ID, clie
 #     name = item["name"]
 #     print(idx, name)
 #
+types = {1: "short",
+         2: "medium",
+         3: "long"}
 
-r_type = "medium" # medium, long, short
-top_tracks = 30 # from 0 to 50
+r_type = input("Выберите временной промежуток:\n1. Короткий, 2. Средний. 3. Длительный: ")
+while r_type not in ["1", "2", "3"]:
+    r_type = input("Выберите временной промежуток:\n1. Короткий, 2. Средний. 3. Длительный: ")
+
+r_type = types[int(r_type)]
+
+top_tracks = input("Введите число треков от 1 до 50: ")
+while int(top_tracks) not in range(1, 51):
+    top_tracks = input("Введите число треков от 1 до 50: ")
+top_tracks = int(top_tracks)
+
+use_genre = input("Определять жанр?\n1. Да, 2. Нет: ")
+
 result_short = sp.current_user_top_tracks(limit=top_tracks, time_range="short_term")
 result_mid = sp.current_user_top_tracks(limit=top_tracks, time_range="medium_term")
 result_long = sp.current_user_top_tracks(limit=top_tracks, time_range="long_term")
@@ -121,6 +136,7 @@ elif r_type == "medium":
 else:
     res = result_short
 
+print(f"\nВаш топ-{top_tracks} за выбранный промежуток времени:")
 with open("playlist_create.scv", 'w', encoding="utf-8", newline='') as write_file:
     csv_writer = csv.writer(write_file)
     csv_writer.writerow(["danceability", "energy", "loudness", "speechiness", "acousticness", "instrumentalness",
@@ -130,7 +146,7 @@ with open("playlist_create.scv", 'w', encoding="utf-8", newline='') as write_fil
     for idx, item in enumerate(res['items']):
         track = item['name']
         id = item['id']
-        print(idx, item['artists'][0]['name'], " – ", track)
+        print(idx + 1, item['artists'][0]['name'], " – ", track)
         del features_result[idx]["key"]
         del features_result[idx]["analysis_url"]
         del features_result[idx]["time_signature"]
@@ -145,16 +161,6 @@ with open("playlist_create.scv", 'w', encoding="utf-8", newline='') as write_fil
             [val.danceability, val.energy, val.loudness, val.speechiness, val.acousticness,
              val.instrumentalness, val.liveness, val.valence,
              val.tempo, track, val.id])
-    #result_mid = sp.current_user_top_tracks(limit=40, time_range="medium_term")
-    # for idx, item in enumerate(result_mid['items']):
-    #     track = item['name']
-    #     print(idx, item['artists'][0]['name'], " – ", track)
-    # result_long = sp.current_user_top_tracks(limit=40, time_range="long_term")
-    # for idx, item in enumerate(result_long['items']):
-    #     track = item['name']
-    #     print(idx, item['artists'][0]['name'], " – ", track)
-
-
 
 train_features = pd.read_csv("train_data.csv")
 train_features = train_features.drop(columns="genre")
@@ -180,11 +186,10 @@ songDF = pd.read_csv("spotify.csv")
 #                   'data9', 'data10']
 songDF = spotify_features
 train_features.drop_duplicates("id", inplace=True)
-data_recomend = recommend_from_playlist(songDF=songDF, complete_feature_set=train_features, playlistDF_test=playlist_features)[:40]
-print(data_recomend)
-ids_recommend = data_recomend['id'].values
-create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"SpotyMixBot - {datetime.now().date()} - {r_type} - pop - {top_tracks}")
-
-
-
+data_recommend = recommend_from_playlist(songDF=songDF, complete_feature_set=train_features, playlistDF_test=playlist_features)[:40]
+#print(data_recomend)
+ids_recommend = data_recommend['id'].values
+playlist_name = str(input("Введите имя для плейлиста:"))
+create_playlist_with_recommended_songs(sp=sp, tracks=ids_recommend, playlist_name=f"{playlist_name} [SpotyMixBot {r_type[0]}{top_tracks}]")
+print("Плейлист создан! Наслаждайтесь!")
 
