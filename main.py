@@ -132,14 +132,14 @@ with open("playlist_create.csv", 'w', encoding="utf-8", newline='') as write_fil
 
 if int(use_genre) == 1:
     print("Определяю жанры...")
-    model = load_model("Model3.h5")
+    model = load_model("Model5.h5")
     with open("playlist_create.csv", "r", encoding="utf-8") as read_file:
         csv_reader = csv.reader(read_file)
         next(csv_reader, None)
         for row in csv_reader:
             track = row[9]
-            a = np.array([[float(row[0]), float(row[1]), float(row[2]), float(row[3]),
-                           float(row[4]), float(row[5]), float(row[6]), float(row[7]), float(row[8])]])
+            a = np.array([[float(row[0]), float(row[1]), float(row[2]) / -60.0, float(row[3]),
+                           float(row[4]), float(row[5]), float(row[6]), float(row[7]), float(row[8]) / 240]])
             prediction = model.predict(a)
             print(track)
             data = {}

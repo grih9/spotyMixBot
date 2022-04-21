@@ -24,15 +24,22 @@ def load_dataset():
                                 "liveness", "valence", "tempo"]].reset_index(drop=True)
     train_genres = train_data[["genre"]].reset_index(drop=True)
 
-    scaler = MinMaxScaler()
-    pop_scaled = pd.DataFrame(scaler.fit_transform(train_features), columns=train_features.columns)
-    pop_scaled.head()
-    train_features = pop_scaled.values
+    # scaler = MinMaxScaler()
+    # pop_scaled = pd.DataFrame(scaler.fit_transform(train_features), columns=train_features.columns)
+    # pop_scaled.head()
+    train_features = train_features.values
 
     labels = train_genres.values
     for i in range(len(labels)):
         b = labels[i][0]
         labels[i][0] = GNI[b]
+
+    for i in range(len(train_features)):
+        z = train_features[i][2] / - 60.0
+        k = train_features[i][8] / 240.0
+        train_features[i][2] = z
+        train_features[i][8] = k
+
 
     # print(labels)
 
@@ -58,18 +65,18 @@ print(test_y.shape)
 
 model = Sequential()
 model.add(Flatten(input_shape=[9]))
-model.add(Dropout(0.6))
 model.add(Dense(1024, activation="relu"))
+model.add(Dense(512, activation="relu"))
 model.add(Dropout(0.5))
 model.add(Dense(256, activation="relu"))
 model.add(Dropout(0.25))
 model.add(Dense(64, activation="relu"))
 model.add(Dense(32, activation="relu"))
 model.add(Dense(len(G), activation="softmax"))
-model.compile(loss="categorical_crossentropy", optimizer=tf.optimizers.Adam(lr=0.0001), metrics=['accuracy'])
+model.compile(loss="categorical_crossentropy", optimizer=tf.optimizers.Adam(lr=0.00001), metrics=['accuracy'])
 print(model.summary())
-pd.DataFrame(model.fit(train_x, train_y, epochs=10, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
+pd.DataFrame(model.fit(train_x, train_y, epochs=4, verbose=1, validation_split=0.1).history).to_csv("training_history.csv")
 score = model.evaluate(test_x, test_y, verbose=1)
 print(score)
-model.save("Model4.h5")
+model.save("Model5.h5")
 

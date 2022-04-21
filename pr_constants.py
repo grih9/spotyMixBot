@@ -29,10 +29,7 @@ GENRES = {1: 'acoustic', 2: 'afrobeat', 3: 'alt-rock', 4: 'alternative', 5: 'amb
        115: 'spanish', 116: 'study', 117: 'summer', 118: 'swedish', 119: 'synth-pop', 120: 'tango',
        121: 'techno', 122: 'trance', 123: 'trip-hop', 124: 'turkish', 125: 'work-out', 126: 'world-music'}
 
-G = ['electro', 'soul', 'latin', 'country', 'jazz', 'blues',
-     'rap', 'hip_hop', 'rock', 'indie', 'classical', 'pop']
+G = ['electro', 'soul', 'jazz', 'rap', 'rock', 'indie', 'classical', 'pop']
 
-GIN = {0: 'pop', 1: 'rock', 2: 'classical', 3: 'soul', 4: 'electro', 5: 'latin',
-       6: 'country', 7: 'jazz', 8: 'blues', 9: 'indie', 10: 'rap', 11: 'hip_hop'}
-GNI = {'pop': 0, 'rock': 1, 'classical': 2, 'soul': 3, 'electro': 4, 'latin': 5,
-       'country': 6, 'jazz': 7, 'blues': 8, 'indie': 9, 'rap': 10, 'hip_hop': 11}
+GIN = {0: 'pop', 1: 'rock', 2: 'classical', 3: 'soul', 4: 'electro', 5: 'jazz', 6: 'indie', 7: 'rap'}
+GNI = {'pop': 0, 'rock': 1, 'classical': 2, 'soul': 3, 'electro': 4, 'jazz': 5, 'indie': 6, 'rap': 7}
